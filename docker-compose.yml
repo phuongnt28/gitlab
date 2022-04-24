@@ -1,19 +1,19 @@
-version: '2'
-
+version: '3'
 services:
-  gitlab:
-    image: 'gitlab/gitlab-ee:latest'
-    restart: always
+  git:
+    container_name: git-server
+    image: 'gitlab/gitlab-ce:latest'
     hostname: 'gitlab.example.com'
-    environment:
-      GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.example.com'
-        # Add any other gitlab.rb configuration here, each on its own line
     ports:
       - '80:80'
       - '443:443'
-      - '2222:22'
     volumes:
-      - '$GITLAB_HOME/config:/etc/gitlab'
-      - '$GITLAB_HOME/logs:/var/log/gitlab'
-      - '$GITLAB_HOME/data:/var/opt/gitlab'
+      - '/srv/gitlab/config:/etc/gitlab'
+      - '/srv/gitlab/logs:/var/log/gitlab'
+      - '/srv/gitlab/data:/var/opt/gitlab'
+    restart: always
+    networks:
+      - net
+networks:
+  net:
+
